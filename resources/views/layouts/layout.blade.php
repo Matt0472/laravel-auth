@@ -4,7 +4,7 @@
   @yield('header')
 </header>
 
-<main>
+<main class="d-flex justify-content-around flex-wrap">
   @yield('main-content')
 </main>
 

@@ -17,6 +17,7 @@
                     You are logged in!
                 </div>
             </div>
+            <a class="btn btn-success mt-4" href="{{route('admin.posts.index')}}">Go to HomePage</a>
         </div>
     </div>
 </div>
