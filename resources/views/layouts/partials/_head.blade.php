@@ -15,8 +15,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="">Create new post</a>
+      <a class="nav-item nav-link active" href="{{route('admin.posts.index')}}">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="{{route('admin.posts.create')}}">Create new post</a>
     </div>
   </div>
 </nav>
