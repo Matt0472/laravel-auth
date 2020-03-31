@@ -8,7 +8,15 @@
   @yield('main-content')
 </main>
 
-<footer>
+<section class="d-flex justify-content-around flex-wrap">
+  @yield('section-content')
+</section>
+
+<section>
+  @yield('form')
+</section>
+
+<footer class="text-center">
   @yield('footer')
 </footer>
 
