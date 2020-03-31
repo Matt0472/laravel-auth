@@ -19,6 +19,26 @@
 
           </textarea>
         </div>
+        
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          @foreach ($tags as $tag)
+          <div>
+            <span>{{$tag->name}}</span>
+            <input type="checkbox" name="tags[]" value="{{$tag->id}}">
+          </div>
+          @endforeach
+        </div>
+
+        <div class="form-group">
+           <label for="images">Images</label>
+           @foreach ($images as $image)
+               <div>
+               <h3>{{$image->name}}</h3>
+               <input type="checkbox" name="images[]" value="{{$image->id}}">
+               </div>
+           @endforeach
+        </div>
         <button class="btn btn-success" type="submit">Salva</button>
       </form>
     </div>

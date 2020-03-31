@@ -15,7 +15,7 @@ class ImagesTableSeeder extends Seeder
     {
         for ($i = 0; $i < 25; $i++) {
             $newImage = new Image;
-            $newImage->name = $faker->words(3);
+            $newImage->name = $faker->word();
             $newImage->path = 'https://picsum.photos/200/300';
             $newImage->save();
         }

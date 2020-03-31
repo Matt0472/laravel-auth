@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use App\Tag;
+use App\Image;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +44,15 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $tags = Tag::all();
+        $images = Image::all();
+
+        $data = [
+            'tags' => $tags,
+            'images' => $images
+        ];
+
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -55,16 +65,31 @@ class PostController extends Controller
     {
         $idUser = Auth::user()->id;
         $request->validate($this->validateRules);
+
         $data = $request->all();
+
         $newPost = new Post;
         $newPost->title = $data['title'];
         $newPost->body = $data['body'];
         $newPost->user_id = $idUser;
         $newPost->slug = Str::finish(Str::slug($newPost->title), rand(1, 1000000));
+        
         $saved = $newPost->save();
+
         if (!$saved) {
             return redirect()->back();
         }
+
+        $tags = $data['tags'];
+        if (!empty($tags)) {
+            $newPost->tags()->attach($tags);
+        }
+
+        $images = $data['images'];
+        if (!empty($images)) {
+            $newPost->images()->attach($images);
+        }
+
         return redirect()->route('admin.posts.show', $newPost->slug);
     }
 
@@ -90,8 +115,16 @@ class PostController extends Controller
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->first();
+        $tags = Tag::all();
+        $images = Image::all();
 
-        return view('admin.posts.edit', compact('post'));
+        $data = [
+            'tags' => $tags,
+            'post' => $post,
+            'images' => $images
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -123,6 +156,17 @@ class PostController extends Controller
         if (!$updated) {
             return redirect()->back();
         }
+
+        $tags = $data['tags'];
+        if (!empty($tags)) {
+            $post->tags()->sync($tags);
+        }
+
+        $images = $data['images'];
+        if (!empty($images)) {
+            $post->images()->sync($images);
+        }
+
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -138,6 +182,8 @@ class PostController extends Controller
             abort('404');
         }
         $id = $post->id;
+        $post->images()->detach();
+        $post->tags()->detach();
         $post->delete();
         $data = [
             'id' => $id,
