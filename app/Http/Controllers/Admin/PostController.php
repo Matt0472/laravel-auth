@@ -28,7 +28,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //chiedere a chiara perchè cosi funziona e nell'altro modo no(where('user_id', Auth::id())->get())
+        // questo è per vedere solamente i post dell'utente appena loggato
+        // $posts = Post::where('user_id', Auth::id())->get();
+        
         $posts = Post::all();
         return view('admin.posts.index', compact('posts'));
     }
