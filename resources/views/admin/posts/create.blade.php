@@ -34,7 +34,7 @@
            <label for="images">Images</label>
            @foreach ($images as $image)
                <div>
-               <h3>{{$image->name}}</h3>
+               <h3>{{$image->path}}</h3>
                <input type="checkbox" name="images[]" value="{{$image->id}}">
                </div>
            @endforeach
