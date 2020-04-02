@@ -10,6 +10,7 @@
       <li class="text-primary">Post Content: <span class="text-dark">{{$post->body}}</span></li>
       <li class="text-primary">Author: <span class="text-dark">{{$post->user->name}}</span></li>
       <li class="text-primary">Created at: <span class="text-dark">{{$post->created_at}}</span></li>       
+      <li class="text-primary"><img src="{{asset('storage/' . $post->path_image)}}" alt=""></li>       
     </ul>
   </div>            
   <a class="btn btn-success mt-5" href="{{route('admin.posts.index')}}">HOME</a>

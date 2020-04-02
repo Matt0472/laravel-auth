@@ -5,7 +5,7 @@
 @section('main-content')
   <div class="wrapper">
     <div class="row">
-      <form action="{{route('admin.posts.store')}}" method="post">
+      <form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="form-group">
@@ -39,6 +39,11 @@
                </div>
            @endforeach
         </div>
+
+         <div class="form-group">
+           <label for="images">Allega un'immagine se non ne hai trovata una tra quelle sopraelencate</label><br>
+            <input type="file" name="path_image" accept="image/*">
+          </div>
         <button class="btn btn-success" type="submit">Salva</button>
       </form>
     </div>
