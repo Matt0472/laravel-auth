@@ -36,6 +36,12 @@
                </div>
            @endforeach
         </div> 
+         <div class="form-group">
+              @isset($article->path_image)
+                <img src="{{asset('storage/' . $article->path_image)}}" alt="">
+              @endisset
+              <input type="file" name="path_image" accept="image/*">
+            </div>
         <button class="btn btn-success" type="submit">Salva</button>
       </form>
     </div>

@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendNewMail;
+use App\Mail\SendMailUpdatePost;
 use Carbon\Carbon;
 
 class PostController extends Controller
@@ -94,6 +97,8 @@ class PostController extends Controller
             $newPost->images()->attach($images);
         }
 
+        Mail::to('mail@mail.it')->send(new SendNewMail($newPost));
+
         return redirect()->route('admin.posts.show', $newPost->slug);
     }
 
@@ -156,7 +161,6 @@ class PostController extends Controller
         $post->slug = Str::finish(Str::slug($post->title), rand(1, 1000000));
         $post->updated_at = Carbon::now();
         $updated = $post->update();
-
         if (!$updated) {
             return redirect()->back();
         }
@@ -170,6 +174,8 @@ class PostController extends Controller
         if (!empty($images)) {
             $post->images()->sync($images);
         }
+
+        Mail::to('mail@mail.it')->send(new SendMailUpdatePost($post));
 
         return redirect()->route('admin.posts.show', $post->slug);
     }
